@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 
+/**
+ * This class adds and removes event from the queue. The queue.
+ * 
+ * @author emmacarlsson, sophiacaspar, malinross
+ *
+ */
 public class EventQueue {
 
 	private ArrayList<Event> eventQueue = new ArrayList<Event>();
 
 	public void add(Event event) {
 		eventQueue.add(event);
-		Collections.sort(eventQueue);
+		Collections.sort(eventQueue); //Sorts the queue.
 	}
 
 	public void clear() {
