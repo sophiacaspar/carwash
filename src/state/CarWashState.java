@@ -53,7 +53,6 @@ public class CarWashState extends SimState {
 		availableSlowWashers = totalSlowWashers;
 	}
 
-
 	public Car makeCar() {
 		return carFactory.makeCar();
 	}
@@ -92,10 +91,6 @@ public class CarWashState extends SimState {
 
 	public double getNextArrivalTime() {
 		return currentTime + exRandom.next();
-	}
-
-	public long getSeed() {
-		return seed;
 	}
 
 	public double[] getSlowWasherDistribution() {
@@ -192,14 +187,12 @@ public class CarWashState extends SimState {
 		else{
 			currentEventTime = currentEvent.startTime;
 		}
-		
 		if (previousEvent == null){
 			previousEventTime = 0.0;
 		}	
 		else{
 			previousEventTime = previousEvent.startTime;
 		}
-
 		totalIdleTime = totalIdleTime + amountAvailableWashers() * (currentEventTime - previousEventTime);
 	}
 

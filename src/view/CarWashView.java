@@ -2,6 +2,7 @@ package view;
 
 import java.util.Observable;
 
+import main.Main;
 import event.Start;
 import event.Stop;
 import simulator.SimView;
@@ -23,46 +24,13 @@ public class CarWashView extends SimView {
 	public void update(Observable o, Object arg) {
 
 		if (state.getCurrentEvent() instanceof Start) {
-			System.out.println(String.format("Fast machines: %s", state.getTotalFastWashers()));
-			System.out.println(String.format("Slow machines: %s", state.getTotalSlowWashers()));
-			System.out.println(String.format("Fast distribution: (%s, %s)", state.getFastWasherDistribution()[0], state.getFastWasherDistribution()[1]));
-			System.out.println(String.format("Slow distribution: (%s, %s)", state.getSlowWasherDistribution()[0], state.getSlowWasherDistribution()[1]));
-			System.out.println(String.format("Exponential distribution with lambda = %s", state.getLambda()));
-			System.out.println(String.format("Seed = %s", state.getSeed()));
-			System.out.println(String.format("Max Queue size: %s",state.getMaxCarQueueSize()));
-
-			System.out.println("----------------------------------------");
-
-			System.out.println("Time\tFast\tSlow\tId\tEvent\tIdleTime\tQueueTime\tQueueSize\tRejected");
-
-			String reportLine = String.format("%.2f\t%s\t%s\t-\t%s\t%s\t\t%.2f\t\t%s\t\t%s",
-					state.currentTime, state.availableFastWashers,
-					state.availableSlowWashers, state.getCurrentEvent(),
-					state.getTotalIdleTime(), state.getTotalQueueTime(),
-					state.carQueue.size(), state.rejected);
-			System.out.println(reportLine);
-
+			System.out.println(startOutput());
+			
 		} else if (state.getCurrentEvent() instanceof Stop) {
-
-			String reportLine = String.format("%.2f\t%s\t%s\t-\t%s\t%.2f\t\t%.2f\t\t%s\t\t%s",
-					state.currentTime, state.availableFastWashers,
-					state.availableSlowWashers, state.getCurrentEvent(),
-					state.getTotalIdleTime(), state.getTotalQueueTime(),
-					state.carQueue.size(), state.rejected);
-			System.out.println(reportLine);
-
-			System.out.println("----------------------------------------");
-
-			System.out.println(String.format("Total idle machine time: %.2f", state.getTotalIdleTime()));
-			System.out.println(String.format("Total queueing time: %.2f",state.getTotalQueueTime()));
-			System.out.println(String.format("Mean queueing time: %.2f", state.meanQueueingTime()));
-			System.out.println(String.format("Rejected cars: %s", state.rejected));
-			System.out.println();
+			System.out.println(stopOutput());
 
 		} else {
-
 			// Current state is either the arrival or leaving of a car.
-
 			String reportLine = String.format("%.2f\t%s\t%s\t%s\t%s\t%.2f\t\t%.2f\t\t%s\t\t%s",
 					state.currentTime, state.availableFastWashers,
 					state.availableSlowWashers, state.getCurrentCar().id,
@@ -72,4 +40,41 @@ public class CarWashView extends SimView {
 			System.out.println(reportLine);
 		}
 	}
+	public String startOutput(){
+		String eol = System.getProperty("line.separator");
+		String startMessage = "Fast machines: " + Main.fastMachines + eol +
+				"Slow machines: " + Main.slowMachines + eol +
+				"Fast distribution: (" + Main.fastLow + ", " + Main.fastHigh + ")" + eol +
+				"Slow distribution: (" + Main.slowLow + ", " + Main.slowHigh + ")" + eol +
+				"Exponential distribution with lambda = " + Main.lambda + eol +
+				"Seed = " + Main.seed + eol+
+				"Max Queue size: " + Main.queueSize + eol +
+				"----------------------------------------" + eol+
+				"Time\tFast\tSlow\tId\tEvent\tIdleTime\tQueueTime\tQueueSize\tRejected" + eol;
+		
+		String reportLine = String.format("%.2f\t%s\t%s\t-\t%s\t%s\t\t%.2f\t\t%s\t\t%s",
+				state.currentTime, state.availableFastWashers,
+				state.availableSlowWashers, state.getCurrentEvent(),
+				state.getTotalIdleTime(), state.getTotalQueueTime(),
+				state.carQueue.size(), state.rejected);
+		return startMessage + reportLine;
+	}
+	
+	public String stopOutput(){
+		String eol = System.getProperty("line.separator");
+		String reportLine = String.format("%.2f\t%s\t%s\t-\t%s\t%.2f\t\t%.2f\t\t%s\t\t%s",
+				state.currentTime, state.availableFastWashers,
+				state.availableSlowWashers, state.getCurrentEvent(),
+				state.getTotalIdleTime(), state.getTotalQueueTime(),
+				state.carQueue.size(), state.rejected);
+		
+		String stopMessage = eol + "----------------------------------------" + eol +
+				String.format("Total idle machine time: %.2f", state.getTotalIdleTime()) + eol +
+				String.format("Total queueing time: %.2f",state.getTotalQueueTime()) + eol +
+				String.format("Mean queueing time: %.2f", state.meanQueueingTime()) + eol +
+				"Rejected cars: " + state.rejected + eol;
+		return reportLine + stopMessage;
+
+	}
+	
 }
