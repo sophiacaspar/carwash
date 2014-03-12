@@ -73,16 +73,8 @@ public class CarWashState extends SimState {
 		return currentEvent;
 	}
 
-	public double[] getFastWasherDistribution() {
-		return fastDist;
-	}
-
 	public double getFastWasherFinishTime() {
 		return currentTime + fastRandom.next();
-	}
-
-	public double getLambda() {
-		return lambda;
 	}
 
 	public int getMaxCarQueueSize() {
@@ -91,10 +83,6 @@ public class CarWashState extends SimState {
 
 	public double getNextArrivalTime() {
 		return currentTime + exRandom.next();
-	}
-
-	public double[] getSlowWasherDistribution() {
-		return slowDist;
 	}
 
 	public double getSlowWasherFinishTime() {
