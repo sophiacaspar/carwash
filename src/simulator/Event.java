@@ -25,6 +25,7 @@ public abstract class Event implements Comparable<Event> {
 		}
 	}
 	
+	//Ögon som kan variera.
 	public abstract void execute();
 
 	@Override
