@@ -17,14 +17,14 @@ import view.CarWashView;
 public class Main {
 
 	public static int fastMachines = 2;
-	public static int slowMachines = 4;
+	public static int slowMachines = 2;
 	public static double fastLow = 2.8;
-	public static double fastHigh = 5.6;
-	public static double slowLow = 4.5;
+	public static double fastHigh = 4.6;
+	public static double slowLow = 3.5;
 	public static double slowHigh = 6.7;
-	public static double lambda = 1.5;
+	public static double lambda = 2.0;
 	public static long seed = 1234;
-	public static int queueSize = 7;
+	public static int queueSize = 5;
 	public static int stopTime = 15;
 
 	/**
