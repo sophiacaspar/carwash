@@ -8,24 +8,42 @@ import event.Stop;
 import simulator.SimView;
 import state.CarWashState;
 
+/**
+ * 
+ * @author emmacarlsson, sophiacaspar, malinross
+ *
+ */
 public class CarWashView extends SimView {
 
 	private CarWashState state;
 
+	/**
+	 * The constructor.
+	 * 
+	 * Defines the car wash view.
+	 * @param state
+	 */
 	public CarWashView(CarWashState state) {
 		setState(state);
 	}
 
+	/**
+	 * Defines the state.
+	 * @param state
+	 */
 	public void setState(CarWashState state) {
 		this.state = state;
 	}
 
 	@Override
+	/**
+	 * Prints out the output.
+	 */
 	public void update(Observable o, Object arg) {
 
 		if (state.getCurrentEvent() instanceof Start) {
 			System.out.println(startOutput());
-			
+
 		} else if (state.getCurrentEvent() instanceof Stop) {
 			System.out.println(stopOutput());
 
@@ -51,7 +69,7 @@ public class CarWashView extends SimView {
 				"Max Queue size: " + Main.queueSize + eol +
 				"----------------------------------------" + eol+
 				"Time\tFast\tSlow\tId\tEvent\tIdleTime\tQueueTime\tQueueSize\tRejected" + eol;
-		
+
 		String reportLine = String.format("%.2f\t%s\t%s\t-\t%s\t%s\t\t%.2f\t\t%s\t\t%s",
 				state.currentTime, state.availableFastWashers,
 				state.availableSlowWashers, state.getCurrentEvent(),
@@ -59,7 +77,7 @@ public class CarWashView extends SimView {
 				state.carQueue.size(), state.rejected);
 		return startMessage + reportLine;
 	}
-	
+
 	public String stopOutput(){
 		String eol = System.getProperty("line.separator");
 		String reportLine = String.format("%.2f\t%s\t%s\t-\t%s\t%.2f\t\t%.2f\t\t%s\t\t%s",
@@ -67,7 +85,7 @@ public class CarWashView extends SimView {
 				state.availableSlowWashers, state.getCurrentEvent(),
 				state.getTotalIdleTime(), state.getTotalQueueTime(),
 				state.carQueue.size(), state.rejected);
-		
+
 		String stopMessage = eol + "----------------------------------------" + eol +
 				String.format("Total idle machine time: %.2f", state.getTotalIdleTime()) + eol +
 				String.format("Total queueing time: %.2f",state.getTotalQueueTime()) + eol +
@@ -76,5 +94,5 @@ public class CarWashView extends SimView {
 		return reportLine + stopMessage;
 
 	}
-	
+
 }
